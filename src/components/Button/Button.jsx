@@ -1,8 +1,6 @@
 import './Button.css'
 
 export default function Button({title,style}){
-
-    
     let css = {}
     if(style == 'dark'){
         css = {
@@ -14,8 +12,7 @@ export default function Button({title,style}){
         css = {
             background: 'green',
         }
-    }
-        
+    }      
     return(
         <button className="button" style={css}>{title}</button>
     )

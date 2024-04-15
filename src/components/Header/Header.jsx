@@ -4,8 +4,12 @@ import favorites from '/header/favorites.svg'
 import user from '/header/user.svg'
 import './Header.css'
 import {Link} from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import Modalka from '../Modalka/Modalka'
 
-export default function Header(){
+export default function Header({basket}){
+	const [modalIsOpen, setModalIsOpen] = useState(false)
+	
     return(
         <header className="header">
             <div className="logo">
@@ -15,6 +19,7 @@ export default function Header(){
             </div>
             <nav className="nav">
                 <Link to="/catalog">Каталог</Link>
+								<Modalka basket={basket} />
                 <Link to="/">Популярные товары</Link>
                 <Link to="/">Главная</Link>
             </nav>

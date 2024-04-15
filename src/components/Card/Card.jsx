@@ -2,7 +2,7 @@ import Button from '../Button/Button'
 import product from '/card/product.jpg'
 import './Card.css'
 
-export default function Card({name,price}){
+export default function Card({name,price,id,addCard}){
     // alert(price)
     return(
         <div className="catalog_item">
@@ -14,6 +14,7 @@ export default function Card({name,price}){
                 {price}
             </div>
             <Button title="В корзину" style="dark" />
+						<button onClick={addCard}>В корзину 2</button>
         </div>
     )
 }

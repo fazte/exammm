@@ -1,19 +1,75 @@
 import Card from '../Card/Card'
 import './Catalog.css'
-import {product} from '../../database'
+import { catalog } from '../../database'
 import Button from '../Button/Button'
+import { useEffect, useState } from 'react'
 
-export default function Catalog(){
-    return(
-        <section className="catalog">
-            <div className="catalog_list">
-                {product.map((product,index) =>(
-                    <Card key={index} {...product}/>
-                ))}
-            </div>
-            <div className="catalog_footer">
-                <Button title="Каталог" style="dark" />
-            </div>
-        </section> 
-    )
+export default function Catalog({addToBasket,basket}) {
+
+	const [query, setQuery] = useState("")
+	const [sorting, setSorting] = useState("")
+	const [category,setCategory] = useState("0")
+
+	function search(e) {
+		setQuery(e.target.value)
+	}
+	const filterdProducts = catalog.filter(
+		(item) => item.name.toLowerCase().includes(query.toLowerCase())
+		&&
+		(item.category == category || category == 0)
+	)
+
+
+	function sort(event) {
+		const sortValue = event.target.value
+		setSorting(sortValue);
+	}
+
+	const sortProducts = (sorting, catalog) => {
+		switch(sorting) {
+			case 'price_asc':
+				return [...catalog].sort((a,b) => a.price - b.price);
+			case 'price_desc':
+				return [...catalog].sort((a,b) => b.price - a.price);
+			default:
+				return catalog
+		}
+		
+	}
+
+	const sortAndFilterProducts = sortProducts(sorting,filterdProducts);
+	console.log(sortAndFilterProducts);
+	return (
+		<>
+			<input onChange={search} type="search" name="search" placeholder="Touck" />
+			<select onChange={sort}>
+				<option value="price_asc">Mo Bo3pocTaHuK LeHb</option>
+				<option value="price_desc">Mo y6biBaHuw LeHbi</option>
+			</select>
+			<hr />
+				<button onClick={()=>setCategory(0)}>Все категории</button>
+				<button onClick={()=>setCategory(1)}>Смартфоны</button>
+				<button onClick={()=>setCategory(2)}>Планшеты</button>
+			<hr />
+		
+			<div className="catalog_list">
+				{
+					sortAndFilterProducts.length ?
+						sortAndFilterProducts.map((card,index) => {
+							return(
+								<Card key={index} 
+								{...card} 
+								addCard={
+									() => addToBasket([...basket,card.id])
+								}
+								
+								/>
+							);
+						})
+						: 
+						<h2>Mo 3anpocy "{query}" Hu4ero He HaiigeHo</h2>
+				}
+			</div>
+		</>
+	)
 }
