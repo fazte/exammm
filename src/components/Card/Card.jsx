@@ -1,6 +1,7 @@
 import Button from '../Button/Button'
 import product from '/card/product.jpg'
 import './Card.css'
+import {Link} from 'react-router-dom'
 
 export default function Card({name,price,id,addCard}){
     // alert(price)
@@ -13,8 +14,8 @@ export default function Card({name,price,id,addCard}){
             <div className="card_price">
                 {price}
             </div>
-            <Button title="В корзину" style="dark" />
 						<button onClick={addCard}>В корзину 2</button>
+						<Link to={`${id}`}>Подробнее</Link>
         </div>
     )
 }
